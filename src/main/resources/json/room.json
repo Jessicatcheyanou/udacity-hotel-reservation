@@ -1,0 +1,18 @@
+ [
+    {
+      "roomNumber": "01",
+      "price": 15000.0,
+      "enumeration": "SINGLE"
+    },
+    {
+      "roomNumber": "02",
+      "price": 10000.0,
+      "enumeration": "SINGLE"
+    },
+    {
+
+      "roomNumber": "03",
+      "price": 25000.0,
+      "enumeration": "SINGLE"
+    }
+  ]

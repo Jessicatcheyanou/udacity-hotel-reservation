@@ -1,0 +1,30 @@
+ [
+    {
+      "customer": {
+        "email" : "jessicatcheyanou@gmail.com",
+        "firstName": "Jessica",
+        "lastName": "Tcheyanou"
+      },
+      "room": {
+        "roomNumber": "01",
+        "price": 15000.0,
+        "enumeration": "SINGLE"
+      },
+      "checkInDate": "25/02/2022",
+      "checkOutDate": "29/02/2022"
+    },
+    {
+      "customer":{
+      "email" : "tcheyanou@outlook.com",
+      "firstName": "Ines",
+      "lastName": "Kanmegne"
+    },
+      "room":{
+      "roomNumber": "02",
+      "price": 10000.0,
+      "enumeration": "SINGLE"
+    },
+      "checkInDate": "29/02/2022",
+      "checkOutDate": "03/03/2022"
+    }
+  ]
