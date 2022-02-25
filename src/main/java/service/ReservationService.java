@@ -11,8 +11,8 @@ public class ReservationService {
 
     private static final ReservationService SINGLETON = new ReservationService();
     private final Map<String,IRoom> rooms = new HashMap<>();
-    private final Map<String,IRoom> loadRooms = new HashMap<>();
 
+    private final Collection<Reservation> customersReservations = new LinkedList<>();
     private final Map<String,Collection<Reservation>> reservations = new HashMap<>();
 
 
@@ -26,6 +26,12 @@ public class ReservationService {
     public void addRoom(final IRoom room){
 
         rooms.put(room.getRoomNumber(),room);
+    }
+
+    public void addReservation(final Reservation reservation){
+           if (customersReservations.add(reservation)){
+        reservations.put(reservation.getCustomer().getEmail(),customersReservations);
+           }
     }
 
     public IRoom getARoom(final String roomId) {

@@ -39,6 +39,25 @@ public class Reservation {
         return checkOutDate;
     }
 
+    //SETTER METHODS
+
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setCheckInDate(Date checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public void setCheckOutDate(Date checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
     @Override
     public String toString() {
         return "Reservation{" +

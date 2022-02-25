@@ -1,7 +1,7 @@
 package menu;
 
 import api.HotelResource;
-import model.room.IRoom;
+import model.room.*;
 import model.reservation.Reservation;
 
 import java.text.ParseException;
@@ -52,7 +52,7 @@ public class MainMenu {
                    System.out.println("Error:Invalid action\n");
                }
            } while (line.charAt(0) != '5' || line.length() != '1');
-       } catch (StringIndexOutOfBoundsException ex){
+       } catch (Exception ex){
            System.out.println("Empty input received.Exiting program");
        }
    }

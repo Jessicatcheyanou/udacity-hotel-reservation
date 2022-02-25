@@ -151,7 +151,8 @@ public class AdminMenu {
 
         adminResource.loadCustomersTestData();
         adminResource.loadRoomsTestData();
-        System.out.println("Customers and Rooms Test Data Loaded with Success!");
+        //adminResource.loadReservationsTestData();
+        System.out.println("Customers and Rooms Test Data Loaded With Success!");
    }
 
 }

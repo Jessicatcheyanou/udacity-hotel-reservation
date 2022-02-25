@@ -10,8 +10,8 @@
         "price": 15000.0,
         "enumeration": "SINGLE"
       },
-      "checkInDate": "25/02/2022",
-      "checkOutDate": "29/02/2022"
+      "checkInDate": "2022-02-25",
+      "checkOutDate": "2022-02-29"
     },
     {
       "customer":{
@@ -24,7 +24,7 @@
       "price": 10000.0,
       "enumeration": "SINGLE"
     },
-      "checkInDate": "29/02/2022",
-      "checkOutDate": "03/03/2022"
+      "checkInDate": "2022-02-29",
+      "checkOutDate": "2022-03-03"
     }
   ]

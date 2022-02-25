@@ -2,6 +2,7 @@ package api;
 
 import model.customer.Customer;
 import model.customer.ReadAndSaveCustomer;
+import model.reservation.ReadAndSaveReservation;
 import model.room.IRoom;
 import model.room.ReadAndSaveRoom;
 import service.CustomerService;
@@ -10,13 +11,14 @@ import service.ReservationService;
 import java.util.Collection;
 import java.util.List;
 
-public class AdminResource {
+public class AdminResource  {
 
     private static final AdminResource SINGLETON = new AdminResource();
     private final CustomerService customerService = CustomerService.getSingleton();
     private final ReservationService reservationService = ReservationService.getSingleton();
     private final ReadAndSaveCustomer readAndSaveCustomer = new ReadAndSaveCustomer();
     private final ReadAndSaveRoom readAndSaveRoom = new ReadAndSaveRoom();
+    private final ReadAndSaveReservation readAndSaveReservation = new ReadAndSaveReservation();
 
     public AdminResource() {
     }
@@ -59,4 +61,10 @@ public class AdminResource {
     public void loadRoomsTestData() throws Exception{
         readAndSaveRoom.readAndSaveRooms();
     }
+
+    //Load Reservations Test Data
+    public void loadReservationsTestData() throws Exception{
+        readAndSaveReservation.readAndSaveReservation();
+    }
+
 }

@@ -1,7 +1,7 @@
 package api;
 
 import model.customer.Customer;
-import model.room.IRoom;
+import model.room.*;
 import model.reservation.Reservation;
 import service.CustomerService;
 import service.ReservationService;
@@ -46,7 +46,7 @@ public class HotelResource {
         final Customer customer = getCustomer(customerEmail);
 
         if (customer == null){
-            return Collections.emptyList();
+            System.out.println("Customer doesn`t exist,thus No Reservations found for him.");;
         }
         return reservationService.getCustomersReservation(getCustomer(customerEmail));
     }
