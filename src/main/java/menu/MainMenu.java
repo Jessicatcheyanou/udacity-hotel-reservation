@@ -42,7 +42,10 @@ public class MainMenu {
                        case '2' -> seeMyReservations();
                        case '3' -> createAccount();
                        case '4' -> AdminMenu.adminMenu();
-                       case '5' -> System.out.println("Exit");
+                       case '5' -> {
+                           System.out.println("Exit");
+                           printMainMenu();
+                       }
                        default -> System.out.println("Unknown action\n");
                    }
                } else {
