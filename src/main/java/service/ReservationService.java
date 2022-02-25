@@ -114,13 +114,5 @@ public class ReservationService {
         }
     }
 
-    public void loadRoomsTestData(){
-        loadRooms.put("SALSA",new Room("SALSA",10000.0,RoomType.SINGLE));
-        loadRooms.put("LAMBADA",new Room("LAMBADA",15000.0,RoomType.DOUBLE));
-        loadRooms.put("JIVE",new Room("JIVE",18000.0,RoomType.SINGLE));
-
-        rooms.putAll(loadRooms);
-
-    }
 
 }

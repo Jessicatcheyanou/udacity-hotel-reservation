@@ -3,6 +3,7 @@ package api;
 import model.customer.Customer;
 import model.customer.ReadAndSaveCustomer;
 import model.room.IRoom;
+import model.room.ReadAndSaveRoom;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -15,6 +16,7 @@ public class AdminResource {
     private final CustomerService customerService = CustomerService.getSingleton();
     private final ReservationService reservationService = ReservationService.getSingleton();
     private final ReadAndSaveCustomer readAndSaveCustomer = new ReadAndSaveCustomer();
+    private final ReadAndSaveRoom readAndSaveRoom = new ReadAndSaveRoom();
 
     public AdminResource() {
     }
@@ -53,8 +55,8 @@ public class AdminResource {
         readAndSaveCustomer.readAndSaveCustomer();
     }
 
-//    //Load Rooms Test Data
-//    public void loadRoomsTestData(){
-//        reservationService.loadRoomsTestData();
-//    }
+    //Load Rooms Test Data
+    public void loadRoomsTestData() throws Exception{
+        readAndSaveRoom.readAndSaveRooms();
+    }
 }

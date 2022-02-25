@@ -33,11 +33,4 @@ public class CustomerService {
         return customers.values();
     }
 
-//    public void loadCustomersTestData(){
-//        loadCustomers.put("jessicatcheyanou@gmail.com", new Customer("jessicatcheyanou@gmail.com","Jessica","Tcheyanou"));
-//        loadCustomers.put("tcheyanou@outlook.com", new Customer("tcheyanou@outlook.com","Jessica","Tcheyanou"));
-//        loadCustomers.put("jessica.ines@ubuea.cm", new Customer("jessica.ines@ubuea.cm","Jessica","Ines"));
-//
-//        customers.putAll(loadCustomers);
-//    }
 }

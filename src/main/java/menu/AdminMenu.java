@@ -150,8 +150,8 @@ public class AdminMenu {
    public static void loadCustomersAndRoomsTestData() throws Exception{
 
         adminResource.loadCustomersTestData();
-        //adminResource.loadRoomsTestData();
-        System.out.println("Customers and Rooms Test Data Loaded Successfully!");
+        adminResource.loadRoomsTestData();
+        System.out.println("Customers and Rooms Test Data Loaded with Success!");
    }
 
 }
