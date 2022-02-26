@@ -21,7 +21,7 @@ public class AdminMenu {
                 2. See all Rooms
                 3. See all Reservations
                 4. Add a Room
-                5. Add Test Data(Rooms and Customers)
+                5. Add Test Data(Customers,Rooms and Reservations)
                 6. Back to Main Menu
                 ____________________________________
                 Please select(above) a number for your menu option of choice:
@@ -42,7 +42,7 @@ public class AdminMenu {
                        case '2' -> displayAllRooms();
                        case '3' -> displayAllReservations();
                        case '4' -> addRoom();
-                       case '5' -> loadCustomersAndRoomsTestData();
+                       case '5' -> loadCustomersRoomsAndReservationsTestData();
                        case '6' -> MainMenu.mainMenu();
                        default -> System.out.println("Unknown action\n");
                    }
@@ -147,12 +147,17 @@ public class AdminMenu {
        addAnotherRoom();
    }
 
-   public static void loadCustomersAndRoomsTestData() throws Exception{
+   public static void loadCustomersRoomsAndReservationsTestData() throws Exception{
 
+        System.out.println("\nList of Existing Customers:");
         adminResource.loadCustomersTestData();
+
+        System.out.println("\nList of Existing Rooms:");
         adminResource.loadRoomsTestData();
-        //adminResource.loadReservationsTestData();
-        System.out.println("Customers and Rooms Test Data Loaded With Success!");
+
+        System.out.println("\nList of Existing Reservations:");
+        adminResource.loadReservationsTestData();
+        System.out.println("\nCustomers,Rooms and Reservations Test Data Loaded With Success!");
    }
 
 }

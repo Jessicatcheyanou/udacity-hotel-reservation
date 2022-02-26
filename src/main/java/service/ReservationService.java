@@ -12,7 +12,7 @@ public class ReservationService {
     private static final ReservationService SINGLETON = new ReservationService();
     private final Map<String,IRoom> rooms = new HashMap<>();
 
-    private final Collection<Reservation> customersReservations = new LinkedList<>();
+    final Collection<Reservation> allReservations = new LinkedList<>();
     private final Map<String,Collection<Reservation>> reservations = new HashMap<>();
 
 
@@ -29,8 +29,8 @@ public class ReservationService {
     }
 
     public void addReservation(final Reservation reservation){
-           if (customersReservations.add(reservation)){
-        reservations.put(reservation.getCustomer().getEmail(),customersReservations);
+           if (allReservations.add(reservation)){
+        reservations.put(reservation.getCustomer().getEmail(),allReservations);
            }
     }
 
@@ -49,6 +49,7 @@ public class ReservationService {
 
             if (customerReservations == null){
                 customerReservations = new LinkedList<>();
+
             }
 
             customerReservations.add(reserveTheRoom);
@@ -59,7 +60,6 @@ public class ReservationService {
     }
 
     private Collection<Reservation> getAllReservations(){
-        final Collection<Reservation> allReservations = new LinkedList<>();
 
         for (Collection<Reservation> reservations: reservations.values()){
             allReservations.addAll(reservations);

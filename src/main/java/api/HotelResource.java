@@ -38,7 +38,7 @@ public class HotelResource {
 
     //A Customer books a room
     public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate,Date checkOutDate){
-        return reservationService.reserveARoom(getCustomer(customerEmail),checkOutDate,checkInDate,room);
+        return reservationService.reserveARoom(getCustomer(customerEmail),checkInDate,checkOutDate,room);
     }
 
     //Get all reservations for a Customer using his email
@@ -46,7 +46,7 @@ public class HotelResource {
         final Customer customer = getCustomer(customerEmail);
 
         if (customer == null){
-            System.out.println("Customer doesn`t exist,thus No Reservations found for him.");;
+            System.out.println("Customer doesn`t exist,thus No Reservations found for him.");
         }
         return reservationService.getCustomersReservation(getCustomer(customerEmail));
     }

@@ -9,15 +9,6 @@ public class Customer {
     private String email;
 
 
-    private void isValidEmail(final String email) {
-        String emailRegex = "^(.+)@(.+).(.+)$";
-        Pattern pattern = Pattern.compile(emailRegex);
-        assert false;
-        if (!pattern.matcher(email).matches()){
-            throw new  IllegalArgumentException("Error,invalid email");
-        }
-    }
-
     public Customer(String firstName, String lastName,String email) {
         this.firstName = firstName;
         this.lastName = lastName;
