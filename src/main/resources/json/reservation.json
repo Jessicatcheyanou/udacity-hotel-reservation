@@ -10,8 +10,8 @@
         "price": 15000.0,
         "enumeration": "SINGLE"
       },
-      "checkInDate": "2022-02-25",
-      "checkOutDate": "2022-02-29"
+      "checkInDate": "2022-02-28",
+      "checkOutDate": "2022-03-03"
     },
     {
       "customer":{
@@ -24,7 +24,21 @@
       "price": 10000.0,
       "enumeration": "SINGLE"
     },
-      "checkInDate": "2022-02-29",
+      "checkInDate": "2022-02-28",
       "checkOutDate": "2022-03-03"
-    }
+    },
+   {
+     "customer":{
+       "email" : "tcheyanou@outlook.com",
+       "firstName": "Ines",
+       "lastName": "Kanmegne"
+     },
+     "room":{
+       "roomNumber": "02",
+       "price": 10000.0,
+       "enumeration": "SINGLE"
+     },
+     "checkInDate": "2022-03-05",
+     "checkOutDate": "2022-03-24"
+   }
   ]

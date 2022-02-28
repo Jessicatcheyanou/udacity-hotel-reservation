@@ -66,4 +66,9 @@ public class HotelResource {
         return reservationService.addDefaultPlus7Days(date);
     }
 
+    //Add Plus Days
+    public Date addPlusDays(final Date date,int addedDays){
+        return reservationService.addDefaultPlusDays(date,addedDays);
+    }
+
 }

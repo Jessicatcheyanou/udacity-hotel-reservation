@@ -14,6 +14,7 @@ public class ReadAndSaveCustomer  {
 
     public void readAndSaveCustomer() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
         InputStream inputStream = TypeReference.class.getResourceAsStream("/json/customer.json");
 
         List<Customer> customerList = objectMapper.readValue(inputStream, new TypeReference<>() {

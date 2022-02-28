@@ -7,6 +7,7 @@ import model.room.Room;
 import model.room.RoomType;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class AdminMenu {
 
@@ -69,7 +70,7 @@ public class AdminMenu {
         try {
             return RoomType.valueOf(scanner.nextLine());
         } catch (IllegalArgumentException exp){
-            System.out.println("Invalid room type!Please,choose 1 for single bed and 2 for double bed:");
+            System.out.println("Invalid room type!Please,enter either SINGLE or DOUBLE");
              return enterRoomType(scanner);
         }
    }
@@ -104,7 +105,7 @@ public class AdminMenu {
         if (rooms.isEmpty()){
             System.out.println("No rooms found.");
         } else {
-            System.out.println("List of All our Rooms");
+            System.out.println("List of All Rooms:");
             rooms.forEach(System.out::println);
         }
    }
@@ -115,19 +116,34 @@ public class AdminMenu {
         if (customers.isEmpty()){
             System.out.println("No Customers found");
         } else {
-            System.out.println("List of All our Customers");
+            System.out.println("List of All Customers");
             customers.forEach(System.out::println);
         }
 
    }
 
    private static void displayAllReservations(){
-
         adminResource.displayAllReservations();
    }
 
    private static void addRoom(){
         final Scanner scanner = new Scanner(System.in);
+        boolean isValidCustomerEmail = false;
+
+        //Check Admin/Customer privileges to add or not a Room
+        do {
+            try {
+                System.out.println("Enter your Email:");
+                final String email = scanner.nextLine();
+                if(adminResource.getAllCustomers().stream().anyMatch(e -> e == adminResource.getCustomer(email))){
+                    isValidCustomerEmail = true;
+                }else {
+                    System.out.println("Either Your Email is incorrect\n OR \nYou are not a Customer nor Admin in our Hotel.\n Create an Account to be Able to Add a Room");
+                }
+            } catch (Exception e){
+                System.out.println("You are not a Customer nor Admin in our Hotel.\n Create an Account to be Able to Add a Room");
+            }
+        }while (!isValidCustomerEmail);
 
         System.out.println("Enter room number");
         final String roomNumber = scanner.nextLine();
@@ -157,7 +173,9 @@ public class AdminMenu {
 
         System.out.println("\nList of Existing Reservations:");
         adminResource.loadReservationsTestData();
+
         System.out.println("\nCustomers,Rooms and Reservations Test Data Loaded With Success!");
+        MainMenu.printMainMenu();
    }
 
 }

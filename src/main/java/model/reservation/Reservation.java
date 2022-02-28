@@ -41,7 +41,6 @@ public class Reservation {
 
     //SETTER METHODS
 
-
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }

@@ -14,6 +14,7 @@ public class ReadAndSaveReservation {
 
     public void readAndSaveReservation() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
         InputStream inputStream = TypeReference.class.getResourceAsStream("/json/reservation.json");
 
         List<Reservation> jsonMap = objectMapper.readValue(inputStream, new TypeReference<>() {
@@ -24,10 +25,5 @@ public class ReadAndSaveReservation {
 
         }
     }
-
-//    public static void main(String[] args) throws Exception {
-//        ReadAndSaveReservation readAndSaveReservation = new ReadAndSaveReservation();
-//        readAndSaveReservation.readAndSaveReservation();
-//    }
 
 }

@@ -10,6 +10,7 @@ public class CustomerService {
 
     private static final CustomerService SINGLETON = new CustomerService();
     private final Map<String,Customer> customers = new HashMap<>();
+    CustomerEmailValidation customerEmailValidation = new CustomerEmailValidation();
 
     public CustomerService() {
     }
@@ -27,7 +28,10 @@ public class CustomerService {
     }
 
     public Customer getCustomer(final String customerEmail){
-        return customers.get(customerEmail);
+        if (customerEmailValidation.isValidEmail(customerEmail)){
+            return customers.get(customerEmail);
+        }
+        return null;
     }
 
     public Collection<Customer> getAllCustomers(){
