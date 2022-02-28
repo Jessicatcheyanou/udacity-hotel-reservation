@@ -16,7 +16,7 @@ public class ReservationService {
     private final Map<String,Collection<Reservation>> reservationsPerCustomer = new HashMap<>();
 
 
-    public ReservationService() {
+    private ReservationService() {
     }
 
     public static ReservationService getSingleton(){

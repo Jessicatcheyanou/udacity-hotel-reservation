@@ -14,7 +14,7 @@ public class HotelResource {
      private final CustomerService customerService = CustomerService.getSingleton();
      private final ReservationService reservationService = ReservationService.getSingleton();
 
-    public HotelResource() {
+    private HotelResource() {
     }
 
     public static HotelResource getSingleton(){

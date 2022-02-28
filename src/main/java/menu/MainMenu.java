@@ -1,7 +1,7 @@
 package menu;
 
+import api.AdminResource;
 import api.HotelResource;
-import model.customer.CustomerEmailValidation;
 import model.room.*;
 import model.reservation.Reservation;
 
@@ -12,6 +12,7 @@ import java.util.*;
 public class MainMenu {
 
     private static final HotelResource hotelResource = HotelResource.getSingleton();
+    private static final AdminResource adminResource = AdminResource.getSingleton();
 
    public static void printMainMenu(){
        System.out.print("""
@@ -94,7 +95,6 @@ public class MainMenu {
         String stringCustomerEmail = "";
         boolean isValidEmailAndPresentCustomer = false;
         boolean isValidAndPresentRoomNumber = false;
-        final CustomerEmailValidation customerEmailValidation = new CustomerEmailValidation();
 
         if ("y".equals(bookRoom)){
             System.out.println("Do you have an account with us?y/n");
@@ -107,17 +107,11 @@ public class MainMenu {
 
                         System.out.println("Enter your email address(following this format..name@domain.com)");
                         final String customerEmail = scanner.nextLine();
-                        if (customerEmailValidation.isValidEmail(customerEmail) && hotelResource.getCustomer(customerEmail) != null){
+                        if (hotelResource.getCustomer(customerEmail) != null){
                             stringCustomerEmail  = customerEmail;
                             isValidEmailAndPresentCustomer = true;
-                        } else if(!customerEmailValidation.isValidEmail(customerEmail)){
-                            System.out.println("Enter a Valid Email.");
-                        }else if (customerEmailValidation.isValidEmail(customerEmail) && hotelResource.getCustomer(customerEmail) == null){
-                            System.out.println("Customer Not found.\nCreate an Account to reserve a room.");
-                            createAccount();
-                            System.out.println("Proceed in the Reservation.");
                         }else{
-                            System.out.println("Contact us in case you need further assistance.");
+                            System.out.println("Enter a Valid Email.\nOR\nCustomer Not found.\nCreate an Account to reserve a room.");
                         }
                     } catch (Exception e){
                         System.out.println("The System may be under Maintenance.Logout and come back later.");
@@ -179,7 +173,7 @@ public class MainMenu {
         try {
 
             if (checKIn != null && checKOut != null && (checKOut.after(checKIn) || checKOut.equals(checKIn))){
-                System.out.println("Date I want to Check In:\n" + checKIn);
+                System.out.println("Date I want to CheckIn:\n" + checKIn);
                 System.out.println("\nDate I want to CheckOut:\n" + checKOut);
                 Collection<IRoom> availableRooms = hotelResource.findAvailableRooms(checKIn,checKOut);
 
@@ -192,20 +186,9 @@ public class MainMenu {
                         System.out.println("No Other Rooms found");
                     } else {
 
-                        do {
-                            try {
-                                System.out.println("Enter x number of Additional Days towards which you want to perform a room Search");
-                                stringAddedDays = scanner.nextLine();
-                                addedDays = Integer.parseInt(stringAddedDays);
-                                isValidAddedDays = true;
-                            }catch (Exception e){
-                                System.out.println("");
-                            }
-                        }while (!isValidAddedDays);
-
-                        final Date alternativeCheckIn = hotelResource.addPlusDays(checKIn,addedDays);
-                        final Date alternativeCheckOut = hotelResource.addPlusDays(checKOut,addedDays);
-                        System.out.println("The following room(s) are going to be available on the following possible Dates:");
+                        final Date alternativeCheckIn = hotelResource.addDefaultPlusDays(checKIn);
+                        final Date alternativeCheckOut = hotelResource.addDefaultPlusDays(checKOut);
+                        System.out.println("We recommend the following room(s) for the following possible Dates:");
                         printRooms(alternativeRooms);
                         System.out.println("" +
                                 "Possible Check-In Date:" + alternativeCheckIn +
@@ -240,14 +223,13 @@ public class MainMenu {
 
     private static void seeMyReservations(){
         final Scanner scanner = new Scanner(System.in);
-        final CustomerEmailValidation customerEmailValidation = new CustomerEmailValidation();
         boolean isValidEmail = false;
 
         do {
             try {
                 System.out.println("Enter your email(format: name@domain.com)");
                 final String customerEmail = scanner.nextLine();
-                if (customerEmailValidation.isValidEmail(customerEmail) && hotelResource.getCustomer(customerEmail) != null ){
+                if (hotelResource.getCustomer(customerEmail) != null ){
                     printReservations(hotelResource.getCustomersReservation(customerEmail));
                     isValidEmail = true;
                 }
@@ -260,7 +242,6 @@ public class MainMenu {
 
     private static void createAccount(){
        final Scanner scanner = new Scanner(System.in);
-       final CustomerEmailValidation customerEmailValidation = new CustomerEmailValidation();
        boolean isValidEmail = false;
        String validEmail = "";
 
@@ -274,17 +255,18 @@ public class MainMenu {
             try {
                 System.out.println("Enter email (format:name@domain.com):");
                 final String email = scanner.nextLine();
-                if (customerEmailValidation.isValidEmail(email)){
+
+                if (adminResource.getAllCustomers().stream().noneMatch(e -> e.isValidEmail(email))){
                     validEmail = email;
+                    hotelResource.createACustomer(firstName,lastName,validEmail);
                     isValidEmail = true;
+                    System.out.println("Account Created With Success!");
                 }
             } catch (Exception e){
                 System.out.println("InValid Email..\nEnter a Valid Email.");
             }
-
         }while (!isValidEmail);
-        hotelResource.createACustomer(firstName,lastName,validEmail);
-        System.out.println("Account Created With Success!");
+
     }
 }
 

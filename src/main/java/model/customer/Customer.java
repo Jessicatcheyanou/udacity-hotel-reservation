@@ -1,21 +1,28 @@
 package model.customer;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.regex.Pattern;
 
 public class Customer {
 
-    private String firstName;
-    private String lastName;
-    private String email;
+    private final String firstName;
+
+    private final String lastName;
+
+    private final String email;
 
 
-    public Customer(String firstName, String lastName,String email) {
+    public Customer(@JsonProperty("firstName")String firstName,@JsonProperty("lastName")String lastName, @JsonProperty("email")String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
-    public Customer() {
+    public boolean isValidEmail(final String email) {
+        String emailRegex = "^(.+)@(.+).(.+)$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
     }
 
     //getter methods
@@ -30,8 +37,6 @@ public class Customer {
     public String getLastName() {
         return lastName;
     }
-
-    //Setter Methods
 
 
     @Override

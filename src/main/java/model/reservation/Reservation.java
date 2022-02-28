@@ -2,23 +2,22 @@ package model.reservation;
 
 import java.util.Date;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import model.customer.*;
 import model.room.*;
 
 public class Reservation {
-    private Customer customer;
-    private IRoom room;
-    private Date checkInDate;
-    private Date checkOutDate;
+    private final Customer customer;
+    private final IRoom room;
+    private final Date checkInDate;
+    private final Date checkOutDate;
 
-    public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+    public Reservation(@JsonProperty("customer") Customer customer,@JsonProperty("room") IRoom room,@JsonProperty("checkInDate") Date checkInDate,@JsonProperty("checkOutDate") Date checkOutDate) {
         this.customer = customer;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-    }
-
-    public Reservation() {
     }
 
     //GETTER METHODS
@@ -37,24 +36,6 @@ public class Reservation {
 
     public Date getCheckOutDate() {
         return checkOutDate;
-    }
-
-    //SETTER METHODS
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public void setCheckInDate(Date checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public void setCheckOutDate(Date checkOutDate) {
-        this.checkOutDate = checkOutDate;
     }
 
     @Override

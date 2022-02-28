@@ -26,4 +26,9 @@ public class ReadAndSaveReservation {
         }
     }
 
+    public static void main(String[] args) throws Exception {
+        ReadAndSaveReservation readAndSaveReservation = new ReadAndSaveReservation();
+        readAndSaveReservation.readAndSaveReservation();
+    }
+
 }

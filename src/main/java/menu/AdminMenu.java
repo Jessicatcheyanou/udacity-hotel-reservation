@@ -7,7 +7,6 @@ import model.room.Room;
 import model.room.RoomType;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 public class AdminMenu {
 
@@ -163,7 +162,7 @@ public class AdminMenu {
        addAnotherRoom();
    }
 
-   public static void loadCustomersRoomsAndReservationsTestData() throws Exception{
+   private static void loadCustomersRoomsAndReservationsTestData() throws Exception{
 
         System.out.println("\nList of Existing Customers:");
         adminResource.loadCustomersTestData();
