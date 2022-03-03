@@ -29,22 +29,23 @@ public class MainMenu {
                """);
    }
    public static void mainMenu(){
-       String line = "";
-       Scanner scanner = new Scanner(System.in);
+       String stringMenuChoice;
+       int menuChoice;
+       final Scanner scanner = new Scanner(System.in);
 
        printMainMenu();
 
        try {
            do {
-               line = scanner.nextLine();
-
-               if (line.length() == 1){
-                   switch (line.charAt(0)) {
-                       case '1' -> findAndReserveRoom();
-                       case '2' -> seeMyReservations();
-                       case '3' -> createAccount();
-                       case '4' -> AdminMenu.adminMenu();
-                       case '5' -> {
+               stringMenuChoice = scanner.nextLine();
+               menuChoice = Integer.parseInt(stringMenuChoice);
+               if (stringMenuChoice.length() == 1){
+                   switch (menuChoice) {
+                       case 1 -> findAndReserveRoom();
+                       case 2 -> seeMyReservations();
+                       case 3 -> createAccount();
+                       case 4 -> AdminMenu.adminMenu();
+                       case 5 -> {
                            System.out.println("Exit");
                            printMainMenu();
                        }
@@ -53,7 +54,7 @@ public class MainMenu {
                } else {
                    System.out.println("Error:Invalid action\n");
                }
-           } while (line.charAt(0) != '5' || line.length() != '1');
+           } while (menuChoice != '5');
        } catch (Exception ex){
            System.out.println("Empty input received.Exiting program");
        }
@@ -160,8 +161,7 @@ public class MainMenu {
 
     private static void findAndReserveRoom(){
        final Scanner scanner = new Scanner(System.in);
-       boolean isValidAddedDays = false;
-       int addedDays = 0;
+       int addedDays;
        String stringAddedDays;
 
         System.out.println("Enter Check-In Date (dd/MM/yyyy)");
@@ -186,13 +186,37 @@ public class MainMenu {
                         System.out.println("No Other Rooms found");
                     } else {
 
-                        final Date alternativeCheckIn = hotelResource.addDefaultPlusDays(checKIn);
-                        final Date alternativeCheckOut = hotelResource.addDefaultPlusDays(checKOut);
-                        System.out.println("We recommend the following room(s) for the following possible Dates:");
+                        final Date alternativeCheckIn = hotelResource.addDefaultPlus7Days(checKIn);
+                        final Date alternativeCheckOut = hotelResource.addDefaultPlus7Days(checKOut);
+                        System.out.println("We recommend the following room(s) for the following Dates:\n " +
+                                "They will be available in the 7 Days ahead of your initial CheckIn and checkOut Dates");
                         printRooms(alternativeRooms);
                         System.out.println("" +
                                 "Possible Check-In Date:" + alternativeCheckIn +
-                                "\nPossible Check-Out Date:" + alternativeCheckOut);
+                                "\nPossible Check-Out Date:" + alternativeCheckOut + "\n");
+
+                        System.out.println("Input number of increment days to view \n" +
+                                " a listing of matching available rooms.");
+
+                        try {
+                            System.out.println("Input number of Days for the Search");
+                            stringAddedDays = scanner.nextLine();
+                            addedDays = Integer.parseInt(stringAddedDays);
+                            Date extraCheckInDate = hotelResource.addPlusDays(checKIn,addedDays);
+                            Date extraCheckOutDate = hotelResource.addPlusDays(checKOut,addedDays);
+                            //Get User searched alternative Rooms
+                            Collection<IRoom> searchedRooms = hotelResource.findAlternativeRooms(extraCheckInDate,extraCheckOutDate);
+                            System.out.println("Room(s) available in this +"+ addedDays + "Days period");
+
+                            searchedRooms.forEach(System.out::println);
+                            System.out.println("Calculated CheckInDate Date:" + extraCheckInDate);
+                            System.out.println("Calculated CheckOut Date:" + extraCheckOutDate);
+
+                            reserveRoom(scanner,extraCheckInDate,extraCheckOutDate,searchedRooms);
+
+                        } catch (Exception e){
+                            System.out.println("We are experiencing some issues.Please restart the application.");
+                        }
 
                         reserveRoom(scanner,checKIn,checKOut,alternativeRooms);
                     }
