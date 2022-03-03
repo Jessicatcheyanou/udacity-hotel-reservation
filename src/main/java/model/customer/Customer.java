@@ -30,15 +30,6 @@ public class Customer {
         return email;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-
     @Override
     public String toString() {
         return "Customer{" +

@@ -46,7 +46,7 @@ public class HotelResource {
         final Customer customer = getCustomer(customerEmail);
 
         if (customer == null){
-            System.out.println("Customer doesn`t exist,thus No Reservations found for him.");
+            System.out.println("Customer may not exist.");
         }
         return reservationService.getCustomersReservation(getCustomer(customerEmail));
     }

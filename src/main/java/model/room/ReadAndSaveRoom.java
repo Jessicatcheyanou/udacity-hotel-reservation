@@ -18,10 +18,9 @@ public class ReadAndSaveRoom {
         });
 
         for (Room room:roomList){
-            reservationService.addRoom(room);
-            System.out.println(room);
+           reservationService.rooms.put(room.getRoomNumber(),room);
         }
-
+        System.out.println(reservationService.rooms);
 
     }
 }

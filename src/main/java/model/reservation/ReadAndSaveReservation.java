@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import service.ReservationService;
 
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReadAndSaveReservation {
     private final ReservationService reservationService = ReservationService.getSingleton();
@@ -16,19 +15,16 @@ public class ReadAndSaveReservation {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();
         InputStream inputStream = TypeReference.class.getResourceAsStream("/json/reservation.json");
+        Collection<Reservation> storeMyReservations = new LinkedList<>();
 
         List<Reservation> jsonMap = objectMapper.readValue(inputStream, new TypeReference<>() {
         });
-        for (Reservation object: jsonMap){
-              reservationService.addReservation(object);
-            System.out.println(object);
-
+        for (Reservation reservation:jsonMap){
+            if(reservationService.allReservations.add(reservation)){
+                storeMyReservations = reservationService.allReservations;
+            }
         }
-    }
-
-    public static void main(String[] args) throws Exception {
-        ReadAndSaveReservation readAndSaveReservation = new ReadAndSaveReservation();
-        readAndSaveReservation.readAndSaveReservation();
+        System.out.println(storeMyReservations);
     }
 
 }

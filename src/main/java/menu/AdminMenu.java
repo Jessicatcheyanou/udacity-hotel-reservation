@@ -12,7 +12,7 @@ public class AdminMenu {
 
     private static final AdminResource adminResource = AdminResource.getSingleton();
 
-    private static void printMenu(){
+    private static void printAdminMenu(){
         System.out.println("""
 
                 Admin Menu
@@ -28,30 +28,32 @@ public class AdminMenu {
                 """);
     }
    public static void adminMenu(){
-       String line = "";
+       String stringMenuChoice;
+       int menuChoice = 0;
        final Scanner scanner = new Scanner(System.in);
 
-       printMenu();
+       printAdminMenu();
 
        try {
            do {
-               line = scanner.nextLine();
-               if (line.length() == 1){
-                   switch (line.charAt(0)) {
-                       case '1' -> displayAllCustomers();
-                       case '2' -> displayAllRooms();
-                       case '3' -> displayAllReservations();
-                       case '4' -> addRoom();
-                       case '5' -> loadCustomersRoomsAndReservationsTestData();
-                       case '6' -> MainMenu.mainMenu();
-                       default -> System.out.println("Unknown action\n");
+               stringMenuChoice = scanner.nextLine();
+               menuChoice = Integer.parseInt(stringMenuChoice);
+               if (stringMenuChoice.length() == 1){
+                   switch (menuChoice) {
+                       case 1 -> showAllCustomers();
+                       case 2 -> showAllRooms();
+                       case 3 -> showAllReservations();
+                       case 4 -> addARoom();
+                       case 5 -> loadCustomersRoomsAndReservationsTestData();
+                       case 6 -> MainMenu.mainMenu();
+                       default -> System.out.println("Choose amongst the above actions\n");
                    }
                } else {
-                   System.out.println("Error: Invalid action\n");
+                   System.out.println("Error: Invalid input\n");
                }
-           } while (line.charAt(0) != '5' || line.length()!=1);
+           } while (menuChoice != 6);
        } catch (Exception exception){
-           System.out.println("Exiting program.");
+           System.out.println("Leaving program.");
        }
 
    }
@@ -76,29 +78,33 @@ public class AdminMenu {
 
    private static void addAnotherRoom(){
         final Scanner scanner = new Scanner(System.in);
+        String stringAddAnotherRoom;
+        char charAddAnotherRoom;
+        boolean isAdded = false;
+        boolean isNotAdded = false;
 
-        try {
-            String anotherRoom;
+        do {
+            try {
+                stringAddAnotherRoom = scanner.nextLine();
+                charAddAnotherRoom = stringAddAnotherRoom.charAt(0);
 
-            anotherRoom = scanner.nextLine();
-
-            while ((anotherRoom.charAt(0) != 'Y' && anotherRoom.charAt(0) != 'N') || anotherRoom.length() != 1){
-                System.out.println("Please enter Y (Yes) or N (No)");
-                anotherRoom = scanner.nextLine();
+                if (charAddAnotherRoom == 'Y'){
+                    addARoom();
+                    isAdded = true;
+                }else {
+                    printAdminMenu();
+                    //set to TRUE TO 2exit the loop
+                    isAdded = true;
+                }
+            }catch (Exception e){
+                System.out.println("We might be facing some maintenance issues.Please do wait,we will get back to you.");
             }
-            if (anotherRoom.charAt(0) == 'Y'){
-                addRoom();
-            } else if (anotherRoom.charAt(0) == 'N'){
-                printMenu();
-            } else {
-                addAnotherRoom();
-            }
-        } catch (Exception exception){
-            addAnotherRoom();
-        }
+
+        }while (!isAdded);
+
    }
 
-   private static void displayAllRooms(){
+   private static void showAllRooms(){
         Collection<IRoom> rooms = adminResource.getAllRooms();
 
         if (rooms.isEmpty()){
@@ -109,7 +115,7 @@ public class AdminMenu {
         }
    }
 
-   private static void displayAllCustomers(){
+   private static void showAllCustomers(){
         Collection<Customer> customers = adminResource.getAllCustomers();
 
         if (customers.isEmpty()){
@@ -121,11 +127,11 @@ public class AdminMenu {
 
    }
 
-   private static void displayAllReservations(){
+   private static void showAllReservations(){
         adminResource.displayAllReservations();
    }
 
-   private static void addRoom(){
+   private static void addARoom(){
         final Scanner scanner = new Scanner(System.in);
         boolean isValidCustomerEmail = false;
 
@@ -158,7 +164,7 @@ public class AdminMenu {
        adminResource.addRoom(Collections.singletonList(room));
        System.out.println("Room added successfully!");
 
-       System.out.println("Would like to add another room?Y/N");
+       System.out.println("Would you like to add another room?Y/N");
        addAnotherRoom();
    }
 
@@ -174,7 +180,6 @@ public class AdminMenu {
         adminResource.loadReservationsTestData();
 
         System.out.println("\nCustomers,Rooms and Reservations Test Data Loaded With Success!");
-        MainMenu.printMainMenu();
    }
 
 }

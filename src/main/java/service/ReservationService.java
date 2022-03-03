@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 public class ReservationService {
 
     private static final ReservationService SINGLETON = new ReservationService();
-    private final Map<String,IRoom> rooms = new HashMap<>();
+    public final Map<String,IRoom> rooms = new HashMap<>();
 
-    final Collection<Reservation> allReservations = new LinkedList<>();
-    private final Map<String,Collection<Reservation>> reservationsPerCustomer = new HashMap<>();
+    public final Collection<Reservation> allReservations = new LinkedList<>();
+
 
 
     private ReservationService() {
@@ -28,12 +28,6 @@ public class ReservationService {
         rooms.put(room.getRoomNumber(),room);
     }
 
-    public void addReservation(final Reservation reservation){
-           if (allReservations.add(reservation)){
-        reservationsPerCustomer.put(reservation.getCustomer().getEmail(),allReservations);
-           }
-    }
-
     public IRoom getARoom(final String roomId) {
        return rooms.get(roomId);
     }
@@ -45,26 +39,25 @@ public class ReservationService {
     public Reservation reserveARoom(final Customer customer,final Date checkInDate,final Date checkOutDate,final IRoom room){
         final Reservation reserveTheRoom = new Reservation(customer,room,checkInDate,checkOutDate);
 
-        Collection<Reservation> customerReservations = getCustomersReservation(customer);
+        Collection<Reservation> myReservations = getCustomersReservation(customer);
 
-            if (customerReservations == null){
-                customerReservations = new LinkedList<>();
+        if (myReservations.isEmpty()){
+             myReservations = new LinkedList<>();
+        }
 
-            }
-
-            customerReservations.add(reserveTheRoom);
-            reservationsPerCustomer.put(customer.getEmail(), customerReservations);
-
+             myReservations.add(reserveTheRoom);
             return reserveTheRoom;
 
     }
 
     private Collection<Reservation> getAllReservations(){
+        final Collection<Reservation> reservationsCompilation = new LinkedList<>();
 
-        for (Collection<Reservation> reservations: reservationsPerCustomer.values()){
-            allReservations.addAll(reservations);
+        for (Reservation reservation:allReservations){
+            reservationsCompilation.add(reservation);
         }
-        return allReservations;
+
+        return reservationsCompilation;
     }
 
     private boolean reservationOverlaps(final Reservation reservation,final Date checkInDate,final Date checkOutDate){
@@ -114,18 +107,24 @@ public class ReservationService {
         return findAvailableRooms(addDefaultPlus7Days(checkInDate),addDefaultPlus7Days(checkOutDate));
     }
 
-    public Collection<Reservation> getCustomersReservation(final Customer customer){
-       return reservationsPerCustomer.get(customer.getEmail());
+    public Collection<Reservation> getCustomersReservation(Customer customer){
+        Collection<Reservation> customersReservation = new LinkedList<>();
+        for (Reservation reservation:allReservations){
+            if (customer.getEmail().equals(reservation.getCustomer().getEmail())){
+                customersReservation.add(reservation);
+            }
+        }
+        return customersReservation;
     }
 
     public void printAllReservations(){
-        final Map<String,Collection<Reservation>> reservationsForCustomer = reservationsPerCustomer;
+          final Collection<Reservation> clientsReservation = getAllReservations();
 
-        if (reservationsForCustomer.isEmpty()){
+        if (clientsReservation.isEmpty()){
             System.out.println("No reservations found");
         } else {
                 System.out.println("List of All Reservations");
-                reservationsForCustomer.values().forEach(System.out::println);
+            clientsReservation.forEach(System.out::println);
         }
     }
 

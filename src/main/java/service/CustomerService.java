@@ -12,7 +12,7 @@ import java.util.*;
 public class CustomerService {
 
     private static final CustomerService SINGLETON = new CustomerService();
-    private final Map<String,Customer> customers = new HashMap<>();
+    public final Map<String,Customer> customers = new HashMap<>();
 
     private CustomerService() {
     }
@@ -22,21 +22,12 @@ public class CustomerService {
     }
 
     public void addCustomer(final String firstName,final String lastName,final String email){
-
-        if (customers.values().stream().noneMatch(e -> e.isValidEmail(email))){
-            customers.put(email,new Customer(firstName,lastName,email));
-        }
-
+        customers.put(email,new Customer(firstName,lastName,email));
     }
 
-    public Customer getCustomer(final String customerEmail){
+    public Customer getCustomer(String customerEmail){
 
-        for (Customer customer:customers.values()){
-            if (customer.isValidEmail(customerEmail))
-            return customer;
-        }
-
-        return null;
+       return customers.get(customerEmail);
 
     }
 

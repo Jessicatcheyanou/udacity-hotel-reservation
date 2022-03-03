@@ -216,7 +216,7 @@ public class MainMenu {
        if (reservations == null || reservations.isEmpty()){
            System.out.println("No reservations Found");
        } else {
-           System.out.println("List of All Reservations:");
+           System.out.println("List of Reservations:");
            reservations.forEach(System.out::println);
        }
     }
@@ -229,12 +229,13 @@ public class MainMenu {
             try {
                 System.out.println("Enter your email(format: name@domain.com)");
                 final String customerEmail = scanner.nextLine();
-                if (hotelResource.getCustomer(customerEmail) != null ){
+                if (adminResource.getAllCustomers().stream().anyMatch(customer -> customer.isValidEmail(customerEmail))){
                     printReservations(hotelResource.getCustomersReservation(customerEmail));
                     isValidEmail = true;
                 }
+
             } catch (Exception e){
-                System.out.println("Invalid Email\n.Enter a valid Email.");
+                System.out.println("Enter a valid Email.");
             }
         } while (!isValidEmail);
 
@@ -243,7 +244,7 @@ public class MainMenu {
     private static void createAccount(){
        final Scanner scanner = new Scanner(System.in);
        boolean isValidEmail = false;
-       String validEmail = "";
+
 
         System.out.println("Enter first Name:");
         final String firstName = scanner.nextLine();
@@ -255,13 +256,12 @@ public class MainMenu {
             try {
                 System.out.println("Enter email (format:name@domain.com):");
                 final String email = scanner.nextLine();
+                    if (adminResource.getAllCustomers().stream().anyMatch(customer -> customer.isValidEmail(email))){
+                    hotelResource.createACustomer(firstName,lastName,email);
+                        isValidEmail = true;
+                        System.out.println("Account created with Success");
+                    }
 
-                if (adminResource.getAllCustomers().stream().noneMatch(e -> e.isValidEmail(email))){
-                    validEmail = email;
-                    hotelResource.createACustomer(firstName,lastName,validEmail);
-                    isValidEmail = true;
-                    System.out.println("Account Created With Success!");
-                }
             } catch (Exception e){
                 System.out.println("InValid Email..\nEnter a Valid Email.");
             }
