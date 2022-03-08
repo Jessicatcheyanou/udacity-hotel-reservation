@@ -129,7 +129,7 @@ public class MainMenu {
                              stringRoomNumber = roomNumber;
                              isValidAndPresentRoomNumber = true;
                          } else {
-                             System.out.println("Room Number not available.\n Choose one available Room.");
+                             System.out.println("Room already booked\n OR \n Room Number not available.\n Choose one available Room.");
                          }
 
                     } catch (Exception e){
@@ -267,8 +267,6 @@ public class MainMenu {
 
     private static void createAccount(){
        final Scanner scanner = new Scanner(System.in);
-       boolean isValidEmail = false;
-
 
         System.out.println("Enter first Name:");
         final String firstName = scanner.nextLine();
@@ -276,20 +274,16 @@ public class MainMenu {
         System.out.println("Enter Last Name:");
         final String lastName = scanner.nextLine();
 
-        do {
+
             try {
                 System.out.println("Enter email (format:name@domain.com):");
                 final String email = scanner.nextLine();
-                    if (adminResource.getAllCustomers().stream().anyMatch(customer -> customer.isValidEmail(email))){
-                    hotelResource.createACustomer(firstName,lastName,email);
-                        isValidEmail = true;
-                        System.out.println("Account created with Success");
-                    }
+                hotelResource.createACustomer(firstName,lastName,email);
 
             } catch (Exception e){
                 System.out.println("InValid Email..\nEnter a Valid Email.");
             }
-        }while (!isValidEmail);
+
 
     }
 }

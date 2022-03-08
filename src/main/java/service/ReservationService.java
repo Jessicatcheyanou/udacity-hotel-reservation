@@ -38,14 +38,19 @@ public class ReservationService {
 
     public Reservation reserveARoom(final Customer customer,final Date checkInDate,final Date checkOutDate,final IRoom room){
         final Reservation reserveTheRoom = new Reservation(customer,room,checkInDate,checkOutDate);
+        boolean isRoomFree;
+        isRoomFree = reserveTheRoom.getRoom().isFree();
 
-        Collection<Reservation> myReservations = getCustomersReservation(customer);
-
-        if (myReservations.isEmpty()){
-             myReservations = new LinkedList<>();
+        if (isRoomFree){
+            allReservations.add(reserveTheRoom);
+            isRoomFree = false;
+        } else {
+            System.out.println("Room already reserved!");
         }
 
-             myReservations.add(reserveTheRoom);
+        if (allReservations.isEmpty()){
+            System.out.println("Couldn`t Add the Reservation.Try again");
+        }
             return reserveTheRoom;
 
     }
@@ -61,7 +66,7 @@ public class ReservationService {
     }
 
     private boolean reservationOverlaps(final Reservation reservation,final Date checkInDate,final Date checkOutDate){
-        return checkInDate.before(reservation.getCheckOutDate()) && checkOutDate.after(reservation.getCheckInDate());
+        return checkInDate.before(reservation.getCheckOutDate()) && checkOutDate.after(checkInDate) || checkInDate.equals(reservation.getCheckOutDate());
     }
 
 
@@ -101,8 +106,6 @@ public class ReservationService {
         return calendar.getTime();
     }
 
-
-
     public Collection<IRoom> findAlternativeRooms(final Date checkInDate,final Date checkOutDate){
         return findAvailableRooms(addDefaultPlus7Days(checkInDate),addDefaultPlus7Days(checkOutDate));
     }
@@ -118,7 +121,9 @@ public class ReservationService {
     }
 
     public void printAllReservations(){
-          final Collection<Reservation> clientsReservation = getAllReservations();
+          final Collection<Reservation> clientsReservation = new LinkedList<>();
+
+          clientsReservation.addAll(allReservations);
 
         if (clientsReservation.isEmpty()){
             System.out.println("No reservations found");
@@ -126,6 +131,11 @@ public class ReservationService {
                 System.out.println("List of All Reservations");
             clientsReservation.forEach(System.out::println);
         }
+    }
+
+    //default access modifier methods
+    String messageToReserva(){
+        return "To reserve,You can also send a message via this email:jessicatcheyanou@gmail.com";
     }
 
 

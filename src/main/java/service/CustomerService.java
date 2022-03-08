@@ -22,7 +22,16 @@ public class CustomerService {
     }
 
     public void addCustomer(final String firstName,final String lastName,final String email){
-        customers.put(email,new Customer(firstName,lastName,email));
+        Customer customer = new Customer(firstName,lastName,email);
+        if (customer.isValidEmail(email)){
+            customers.put(email,customer);
+            System.out.println("Account created with success");
+            System.out.println("You can proceed");
+        } else {
+            System.out.println("Invalid Email.");
+            System.out.println("Enter 3 to restart again");
+        }
+
     }
 
     public Customer getCustomer(String customerEmail){
