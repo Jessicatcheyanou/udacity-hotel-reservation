@@ -50,3 +50,6 @@ The hotel reservation application handles all exceptions gracefully (user inputs
 
 No crashing. The application does not crash based on user input.
 No unhandled exceptions. The app has try and catch blocks that are used to capture exceptions and provide useful information to the user. There are no unhandled exceptions.
+
+The project validated all the specifications requested.
+Click here to see the rubric of specifications : https://docs.google.com/document/d/12jKRpaKqs4CH1Ru8Bkf07U-bVFhW-eSuEc-Quz4nmjQ/edit?usp=sharing
