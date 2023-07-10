@@ -1,6 +1,6 @@
 # udacity-hotel-reservation
 
-This repository contains Java code of my first project towards the validation of my Udacity Java Nanodegree Scholarship 2022.
+This repository contains Java code of my project towards the validation of my Udacity Java Nanodegree Scholarship 2022.
 
 Project Requirements:
 When building an app, it is common as a developer to be given a specification or set of requirements for how the app should work and what it should do. This page provides the required features for the Hotel Reservation App.
